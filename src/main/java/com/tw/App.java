@@ -13,8 +13,9 @@ import java.util.ResourceBundle;
 public class App 
 {
 	private ResourceBundle properties;
+	private static App instance;
 	
-	public App() {
+	private App() {
 		try {
 			properties = ResourceBundle.getBundle("com.tw.graph-challenge");
 		} catch(MissingResourceException e) {
@@ -23,10 +24,17 @@ public class App
 		}
 	}
 	
-	public String getProperty(String name) {
+	public static App getInstance() {
+		if (instance == null) {
+			instance = new App();
+		}
+		return instance;
+	}
+	
+    public static String getProperty(String name) {
 		String s;
 		try {
-			s = properties.getString(name);
+			s = getInstance().properties.getString(name);
 		} catch (MissingResourceException e) {
 			System.err.println("WARNING: missing data: " + name);
 			return "";
@@ -46,11 +54,9 @@ public class App
 	}
 	
     public static void main( String[] args )
-    {
-    	App app = new App();
-    	
+    {    	
     	if (args.length != 2) {
-    		System.err.println(app.getProperty("usage"));
+    		System.err.println(getProperty("usage"));
     		System.exit(1);
     	}
     	

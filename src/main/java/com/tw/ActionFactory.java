@@ -14,7 +14,7 @@ public class ActionFactory {
 			try {
 				action = (Action) c.newInstance();
 			} catch (Exception e) {
-				System.err.println("Internal error creating " + s + " action: " + e.getMessage());
+				System.err.println(App.getProperty("internal_error") + " " + s + " action: " + e.getMessage());
 			}
 		}		
 

@@ -1,10 +1,14 @@
 package com.tw;
 
 public class Action {
-	String [] parameters;
+	private String [] parameters;
 
 	public void setParameters(String[] parameters)  {
 		this.parameters = parameters;
+	}
+	
+	public String[] getParameters() {
+		return parameters;
 	}
 	
 	public String toString() {
@@ -16,6 +20,16 @@ public class Action {
 	}
 	
 	public String execute(Graph g) {
-		return "<not implemented>";
+		return App.getProperty("not_implemented");
+	}
+	
+	protected Node[] getNodes(Graph graph, String s) {
+		Node[] nodes = new Node[s.length()];
+		int i = 0;
+		for (char c: s.toCharArray()) {
+			String name = String.valueOf(c);
+			nodes[i++] = graph.getNode(name);
+		}
+		return nodes;
 	}
 }

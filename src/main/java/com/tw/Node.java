@@ -11,6 +11,10 @@ public class Node {
 		return name;
 	}
 	
+	List<Edge> getNeighbours() {
+		return neighbours;
+	}
+	
 	public Node(String name) {
 		neighbours = new ArrayList<Edge>();
 		this.name = name;
