@@ -27,7 +27,7 @@ public class Actions {
 			Action action = actionFactory.createAction(name);
 			
 			if (action == null) {
-				throw new IllegalArgumentException("Unknown action: " + name);
+				throw new IllegalArgumentException(App.getProperty("unknown_action") + ": " + name);
 			}
 			
 			action.setParameters(words);
@@ -58,11 +58,16 @@ public class Actions {
 		actionsList   = new ArrayList<Action>();
 	}
 	
-	public String execute(Graph g) {
+	/**
+	 * Executes this action on the given graph
+	 * @param graph
+	 * @return the result of the action
+	 */
+	public String execute(Graph graph) {
 		StringBuilder s = new StringBuilder();
 
 		for (Action action : actionsList) {
-			s.append(action + " => " + action.execute(g) + "\n");
+			s.append(action + " => " + action.execute(graph) + "\n");
 		}
 		
 		return s.toString();

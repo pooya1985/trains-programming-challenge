@@ -12,7 +12,6 @@ public class Condition {
 	private String entity;
 	private Operation operation;
 	
-
 	static Map<String, Operation> operatorsMap;
 	
 	static {
@@ -41,7 +40,7 @@ public class Condition {
 		} else if (entity.equals("distance")) {
 			rc = operation.evaluate(path.getDistance(), value);
 		} else {
-			throw new IllegalArgumentException("Unkown entity: " + entity);
+			throw new IllegalArgumentException(App.getProperty("unknown_entity") + ": " + entity);
 		}
 		return rc;
 	}
@@ -50,7 +49,7 @@ public class Condition {
 		this.operation = operatorsMap.get(operator);
 		
 		if (this.operation == null) {
-			throw new IllegalArgumentException("Unknown operator: "+ operator);
+			throw new IllegalArgumentException(App.getProperty("unknown_operator") +": " + operator);
 		}
 		this.value  = value;
 		this.entity = entity;
