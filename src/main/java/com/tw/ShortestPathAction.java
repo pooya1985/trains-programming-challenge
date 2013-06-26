@@ -1,6 +1,52 @@
 package com.tw;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
 public class ShortestPathAction extends Action {
+	private static int runDijkstra(Graph graph, Node start, Node target) {
+		Set<Node> unsettled = new HashSet<Node>();
+		Set<Node> settled = new HashSet<Node>();
+		
+		Node[] nodes = graph.getNodes();
+		Map<String, Integer> distance = new TreeMap<String, Integer>();
+
+		for (Node node: nodes) {
+			distance.put(node.getName(), Integer.MAX_VALUE);
+		}
+				
+		unsettled.add(start);
+		distance.put(start.getName(), 0);
+		
+		while(!unsettled.isEmpty()) {
+			Node nearest=null;
+			int minDistance = Integer.MAX_VALUE;
+			for(Node n : unsettled) {
+				Integer dist = distance.get(n.getName());
+				if ( dist < minDistance) {
+					nearest = n;
+					minDistance = dist ;
+				}
+			}
+			unsettled.remove(nearest);
+			settled.add(nearest);
+			
+			for (Edge edge : nearest.getNeighbours()) {
+				if (!settled.contains(edge.getDestination())) {
+					int newDistance = distance.get(nearest.getName()) + edge.getDistance();
+					Integer dist = distance.get(edge.getDestination().getName());
+					if (newDistance < dist) {
+						distance.put(edge.getDestination().getName(), newDistance);
+						unsettled.add(edge.getDestination());
+					}
+				}
+			}
+		}
+		return distance.get(target.getName());
+	}
+
 	public String execute(Graph graph) {
 		String[] parameters = getParameters();
 
@@ -30,7 +76,7 @@ public class ShortestPathAction extends Action {
 			// (implicitly) that in this case a different path be found instead
 			// of just returning the obvious answer (no need to travel).
 			for (Edge edge : start.getNeighbours()) {
-				int distance = Dijkstra.run(graph, edge.getDestination(), target);
+				int distance = runDijkstra(graph, edge.getDestination(), target);
 				if (distance != Integer.MAX_VALUE) {
 					// a path has been found from a neighbour of the start node
 					// to the start node. Total distance will of course include
@@ -43,7 +89,7 @@ public class ShortestPathAction extends Action {
 				}
 			}
 		} else {
-			shortestDistance = Dijkstra.run(graph, nodes[0], nodes[1]);
+			shortestDistance = runDijkstra(graph, nodes[0], nodes[1]);
 		}
 		
 		if (shortestDistance == Integer.MAX_VALUE) {
