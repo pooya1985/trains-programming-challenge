@@ -11,6 +11,10 @@ public class Graph {
     
     Map<String, Node> nodeMap = new TreeMap<String, Node>();
     
+    public Node[] getNodes() {
+    	return nodeMap.values().toArray(new Node[0]);
+    }
+    
     /**
      * Looks up a given node in this graph by name. If it doesn't exist, a new
      * node is created and inserted in the graph.

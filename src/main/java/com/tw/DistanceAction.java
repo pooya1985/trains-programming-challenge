@@ -2,8 +2,15 @@ package com.tw;
 
 public class DistanceAction extends Action {
 	public String execute(Graph graph) {
-		// first parameter is the nodes specification
-		String nodesSpec = getParameters()[1];
+		String[] parameters = getParameters();
+
+		// second parameter is the nodes specification
+		if (parameters.length < 2) {
+			throw new IllegalArgumentException("Invalid action:" + toString() + 
+					": missing nodes specification");
+		}
+		
+		String nodesSpec = parameters[1];
 		Node[] nodes = getNodes(graph, nodesSpec);
 				
 		int distance = 0;
