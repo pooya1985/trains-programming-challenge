@@ -45,6 +45,13 @@ public class Condition {
 		return rc;
 	}
 
+	/**
+	 * Constructs a Condition object that can be evaluated against a given Path
+	 * later. 
+	 * @param operator one of"<", ">" or "="
+	 * @param value to be used in the comparison
+	 * @param entity either "stops" or "distance"
+	 */
 	public Condition(String operator, int value, String entity) {
 		this.operation = operatorsMap.get(operator);
 		

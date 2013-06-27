@@ -13,6 +13,7 @@ public class GraphSpecTest extends TestCase {
 		
 		try {
 			Graph g2 = new Graph("AB5, DF3, DB , BA9");
+			fail("Incomplete DB spec accepted");
 		} catch(IllegalArgumentException e) {
 		}
 		

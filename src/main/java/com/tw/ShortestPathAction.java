@@ -44,7 +44,7 @@ public class ShortestPathAction extends Action {
 				if (distance != Integer.MAX_VALUE) {
 					// a path has been found from a neighbour of the start node
 					// to the start node. Total distance will of course include
-					// the distance from the start to this neighbour.
+					// the distance from the start node to this neighbour.
 					distance += edge.getDistance();
 					if (distance < shortestDistance) {
 						// a new shortest distance has been found

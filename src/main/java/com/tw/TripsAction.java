@@ -32,6 +32,9 @@ public class TripsAction extends Action {
 		Condition filterCond = new Condition(operator, value, entity);
 		Condition runCond = filterCond;
 		
+		// when the filtering condition is to find all paths that match
+		// a given value, the test runs so long as the number of hops
+		// of the distance is still less than the value we are searching for
 		if (operator.equals("=")) {
 			runCond = new Condition("<", value + 1, entity);
 		}

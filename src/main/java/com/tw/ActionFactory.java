@@ -3,6 +3,12 @@ package com.tw;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * A small Factory Pattern to instantiate Actions based on a command
+ * string
+ * @author erick
+ *
+ */
 public class ActionFactory {
 	private Map<String, Class<?> > actionsMap;
 	

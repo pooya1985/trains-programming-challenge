@@ -75,6 +75,7 @@ public class Dijkstra {
 				break;
 			}
 		}
+		// returns the shortest distance recorded from the target node to the start node
 		return distance.get(target.getName());
 	}
 }

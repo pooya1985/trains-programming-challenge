@@ -17,5 +17,4 @@ public class ActionFactoryTest extends TestCase {
 		Action shortest = testFactory.createAction("shortest?");
 		assertTrue(shortest.getClass().equals(ShortestPathAction.class));
 	}
-
 }
