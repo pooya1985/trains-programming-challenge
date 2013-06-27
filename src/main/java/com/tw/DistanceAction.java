@@ -6,8 +6,8 @@ public class DistanceAction extends Action {
 
 		// second parameter is the nodes specification
 		if (parameters.length < 2) {
-			throw new IllegalArgumentException("Invalid action:" + toString() + 
-					": missing nodes specification");
+			throw new IllegalArgumentException(App.getProperty("invalid_action") + ": " + toString() + 
+					App.getProperty("missing_nodes_specification"));
 		}
 		
 		String nodesSpec = parameters[1];

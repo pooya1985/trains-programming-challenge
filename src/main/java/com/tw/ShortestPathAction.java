@@ -7,7 +7,7 @@ public class ShortestPathAction extends Action {
 
 		// second parameter contains the nodes specification
 		if (parameters.length < 2) {
-			throw new IllegalArgumentException(System.getProperty("invalid_action") + ": " + toString() + 
+			throw new IllegalArgumentException(App.getProperty("invalid_action") + ": " + toString() + 
 					App.getProperty("missing_nodes_specification"));
 		}
 		
@@ -15,7 +15,7 @@ public class ShortestPathAction extends Action {
 		Node[] nodes     = getNodes(graph, nodesSpec);
 	
 		if (nodes.length != 2) {
-			throw new IllegalArgumentException(System.getProperty("invalid_action") + ": " + toString() +
+			throw new IllegalArgumentException(App.getProperty("invalid_action") + ": " + toString() +
 					App.getProperty("must_specify_source_and_target"));
 		}
 		

@@ -45,12 +45,19 @@ public class Graph {
 				// An edge spec must be at least 3 characters.. i.e. 
 				// AB3
 				if (s.length() < 3) {
-					throw new IllegalArgumentException("Bad graph specification:" + s);
+					throw new IllegalArgumentException("Bad graph specification: " + s);
 				}
 				String sourceNodeName = s.substring(0,1);
 				String targetNodeName = s.substring(1,2);
-				int distance = Integer.parseInt(s.substring(2));
 				
+				int distance;
+				
+				try {
+					distance = Integer.parseInt(s.substring(2));
+				} catch(NumberFormatException e) {
+					throw new IllegalArgumentException("Bad graph specification: " + s +
+							": " + s.substring(2) + " is not a valid integer");
+				}
 				Node source = getNode(sourceNodeName);
 				Node target = getNode(targetNodeName);
 				
