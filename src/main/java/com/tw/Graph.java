@@ -86,4 +86,8 @@ public class Graph {
 			read(str);
 		}
 	}
+	
+	public Graph(String str) {
+		read(str);
+	}
 }
