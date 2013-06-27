@@ -1,0 +1,99 @@
+TRAINS PROBLEM SOLUTION
+=======================
+
+1. Building
+The solution is provided in the form of a Maven project. It can
+thus be built by invoking the "package" goal so:
+
+  $ mvn package
+
+Note that this goal runs all JUnit tests included in the solution.
+
+When using Eclipse, I recommend simply importing the project via the
+File->Import->Existing Maven Project. Select the directory
+corresponding to this solution.
+
+2. Running the solution
+The solution can be run on the CLI:
+
+  $ java -jar target/graph-challenge-1.0-SNAPSHOT.jar graph-input.txt commands.txt
+
+Note that the sample input and commands files, "graph-input.txt" and
+"commands.txt" are provided in the solution. These can be of course modified
+as needed. The format of the files is explained by the help screen produced
+when the application is run without arguments. Here is a copy of the help
+screen:
+
+Usage: <input graph> <commands file>
+This application analyzes an input graph as instructed by a series 
+of commands. The format of the input files is as follows:
+. <input graph>: file containing a comma separated set of graph 
+.                connections, where each connection is described 
+.                by two letters corresponding to the source and target 
+.                node followed by an integer indicating the weight (i.e
+.                the "distance") for this route. For example "AC7, CB5")
+. <commands file>: file describing the analysis to be performed. Each line
+.                  corresponds to one action:
+.                  distance? <nodes>: calculates the distance for a given
+.                                     route. For example: "distance? ADC"
+.                  trips? <cond> <nodes>: calculates the number of possible
+.                                         trips between two nodes which satisfy
+.                                         a given condition. Conditions are
+.                                         expressed with a combination of an
+.                                         operator, a value and an entity name
+.                                         i.e. ">5 stops" or "=7 distance".
+.                                         So for example: "trips? <10 stops EA"
+.                                         means "calculate the number of trips
+.                                         between E and A which have less than
+.                                         10 stops.
+.                  shortest? <nodes>:     finds the shortest distance between
+.                                         two nodes (i.e. "shortest? AD")
+
+
+
+When running the solution from Eclipse, it is necessary to specify the command
+line arguments for the application, so in the project properties,
+select Run/Debug Settings->App->Edit, select the Arguments tab and specify
+
+  graph-input.txt commands.txt
+
+as program arguments.
+
+Here is an example run of the solution:
+
+$ java -jar target/graph-challenge-1.0-SNAPSHOT.jar  graph-input.txt commands.txt
+distance? ABC  => 9
+distance? AD  => 5
+distance? ADC  => 13
+distance? AEBCD  => 22
+distance? AED  => ROUTE NICHT VORHANDEN
+trips? <4 stops CC  => 2
+trips? =4 stops AC  => 3
+shortest? AC  => 9
+shortest? BB  => 9
+trips? <30 distance CC  => 7
+
+Note that the application supports German and English locales, so depending on
+system settings, reports and errors will be reported on different languages.
+
+3. Approach
+The solution to the problem contains 3 different aspects. The commands are read and a given Action object is instantiated to carry on a specific analysis. The 3 main actions are implemented by the following classes:
+
+- DistanceAction : its execute() method simply follows the path as requested by
+  the user, recording the distance travelled. If the path specified is not
+  possible, the result is "NO SUCH ROUTE".
+
+- TripsAction : when execute()'d , it performs a recursive tree search starting
+  on the first node, to find all possible paths that end at the target node,
+  which satisfy the given condition. This recursive search is carried on by the
+  PathFinder class
+
+- ShortestPathAction: execute() will trigger a run of the Dijkstra algorithm
+  to search for the shortest route between the source and the target. It would
+  have also been possible to reuse the PathFinder class for this action, and
+  after finding all possible paths between the start and target nodes, simply
+  iterate thru the paths and select the smallest one. This however, implicates
+  selecting an arbitrary maximum number of hops, after which the search for the
+  shortest path should be given up. Furthermore it is highly inefficient. So I
+  decided to implement the search for the shortest path using the well known
+  Dijkstra algorithm.
